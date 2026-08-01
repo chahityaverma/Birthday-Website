@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, Kanak 💕</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-dark: #16161A;       
+    --bg-card: #202025;       
+    --bg-input: #2A2A32;      
+    --accent-pink: #FF6B9E;   
+    --text-main: #F3F3F3;     
+    --text-muted: #888899;    
+    --deep-rose: #8B3A54;
+    --rose: #B05070;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-main);
+    overflow-x: hidden;
+  }
+
+  /* ── NAVBAR & MUSIC TERMINAL ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(22, 22, 26, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 107, 158, 0.2);
+    padding: 0 1.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  nav .logo {
+    font-family: 'Playfair Display', serif; font-style: italic;
+    color: var(--accent-pink); font-size: 1.1rem;
+  }
+  nav .links { display: flex; gap: 1.2rem; list-style: none; }
+  nav .links a {
+    font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--text-muted); text-decoration: none; font-weight: 700; transition: color 0.2s;
+  }
+  nav .links a:hover { color: var(--accent-pink); }
+
+  .music-terminal {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--bg-input); padding: 4px 12px; border-radius: 50px;
+    border: 1px solid rgba(255, 107, 158, 0.3);
+  }
+  .terminal-btn {
+    background: none; border: none; color: var(--text-main); cursor: pointer;
+    font-size: 1rem; transition: color 0.2s;
+  }
+  .terminal-btn:hover { color: var(--accent-pink); }
+
+  .terminal-select {
+    background: transparent;
+    color: var(--accent-pink);
+    border: none;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    outline: none;
+    cursor: pointer;
+    max-width: 120px;
+    text-overflow: ellipsis;
+  }
+  .terminal-select option {
+    background: var(--bg-card);
+    color: var(--text-main);
+  }
+
+  /* ── VIBE PANEL ── */
+  .vibe-panel-toggle {
+    position: fixed; bottom: 20px; left: 20px; z-index: 2000;
+    background: var(--bg-card); border: 1px solid var(--accent-pink);
+    border-radius: 50%; width: 45px; height: 45px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent-pink); cursor: pointer; font-size: 1.2rem;
+    box-shadow: 0 4px 15px rgba(255,107,158,0.2);
+  }
+  .vibe-panel {
+    position: fixed; bottom: 75px; left: 20px; z-index: 2000;
+    background: var(--bg-card); border: 1px solid rgba(255,107,158,0.3);
+    border-radius: 12px; padding: 1rem; display: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+  .vibe-panel.open { display: block; }
+  .vibe-btn { background: var(--bg-input); border: 1px solid transparent; color: white; padding: 5px 10px; border-radius: 6px; cursor: pointer; margin: 2px;}
+  .vibe-btn:hover { border-color: var(--accent-pink); }
+
+  #particles-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+
+  /* ── HERO & DIGITAL COUNTER ── */
+  section { position: relative; z-index: 1; padding: 5rem 2rem; }
+  #hero {
+    min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; background: radial-gradient(circle at top, #2A1A24 0%, var(--bg-dark) 60%);
+  }
+  .hero-eyebrow { font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-pink); font-weight: 700; margin-bottom: 1rem; }
+  
+  #hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.6rem, 7vw, 5rem); color: var(--deep-rose); line-height: 1.15; margin-bottom: 1.2rem; }
+  #hero h1 em { font-style: italic; color: var(--rose); }
+  
+  .digital-counter {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.5rem; font-weight: bold; color: var(--accent-pink);
+    background: var(--bg-card); padding: 10px 20px; border-radius: 8px;
+    border: 1px dashed var(--accent-pink); margin-bottom: 2rem;
+  }
+
+  /* ── SHARED STYLES ── */
+  .section-heading { text-align: center; margin-bottom: 3.5rem; }
+  .section-heading .eyebrow { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-pink); font-weight: 700; margin-bottom: 0.6rem; display: block; }
+  .section-heading h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3rem); color: var(--text-main); }
+  .section-heading p { color: var(--text-muted); margin-top: 0.7rem; font-size: 1rem; }
+  
+  .btn-primary {
+    display: inline-block; padding: 0.9rem 2.5rem; background: var(--accent-pink); color: var(--bg-dark); border: none; border-radius: 50px; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.25s; box-shadow: 0 6px 20px rgba(255,107,158,0.3); text-decoration: none;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(255,107,158,0.5); }
+
+  .dark-card { background: var(--bg-card); border-radius: 16px; padding: 2.5rem 2rem; border: 1px solid rgba(255,107,158,0.15); box-shadow: 0 10px 30px rgba(0,0,0,0.3); max-width: 650px; margin: 0 auto; text-align: center; position: relative; overflow: hidden;}
+
+  /* ── SECRET MESSAGE & UNLOCKED VIDEOS ── */
+  .secret-input {
+    background: var(--bg-input); border: 1px solid var(--text-muted); color: var(--text-main); padding: 10px 15px; border-radius: 8px; width: 80%; margin-bottom: 1rem; font-family: 'Lato', sans-serif;
+  }
+  .secret-input:focus { outline: none; border-color: var(--accent-pink); }
+  #secret-reveal { display: none; margin-top: 1rem; font-style: italic; color: #4CAF50; font-weight: bold; }
+  #secret-error { display: none; margin-top: 1rem; color: #FF4757; font-weight: bold; font-size: 0.95rem; }
+
+  .unlocked-videos-grid {
+    display: none; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 2rem; border-top: 1px dashed var(--accent-pink); padding-top: 1.5rem;
+  }
+  .video-card {
+    background: var(--bg-input); padding: 12px; border-radius: 12px; border: 1px solid rgba(255,107,158,0.3);
+  }
+  .video-card h4 { color: var(--accent-pink); font-family: 'Playfair Display', serif; margin-bottom: 8px; font-size: 1.1rem; }
+  .video-card video { width: 100%; border-radius: 8px; outline: none; max-height: 320px; background: #000; }
+
+  /* ── OFF-CAMPUS TICKET ── */
+  .ticket-display {
+    background: var(--bg-input); border: 2px dashed var(--accent-pink); padding: 1.5rem; border-radius: 12px; margin-top: 1.5rem; font-family: 'Courier New', monospace; color: var(--text-main); font-size: 0.9rem;
+  }
+
+  /* ── MIDNIGHT VAULT & CELEBRATION STAGE ── */
+  .virtual-lock { font-size: 3.5rem; color: var(--accent-pink); margin-bottom: 1rem; cursor: pointer; user-select: none; transition: transform 0.2s; }
+  .virtual-lock:hover { transform: scale(1.1); }
+  
+  #midnight-reveal { display: none; margin-top: 2rem; border-top: 1px dashed var(--accent-pink); padding-top: 2rem; position: relative; z-index: 2; }
+  
+  .pookie-cat {
+    position: absolute; width: 65px; height: 65px; object-fit: contain;
+    pointer-events: none; opacity: 0.85; z-index: 0;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5));
+    animation: floatCat 3s ease-in-out infinite alternate;
+  }
+  .cat-left { top: 10px; left: 10px; }
+  .cat-right { top: 10px; right: 10px; }
+  .cat-bottom-left { bottom: 10px; left: 15px; }
+  .cat-bottom-right { bottom: 10px; right: 15px; }
+  @keyframes floatCat { 0% { transform: translateY(0) rotate(-5deg); } 100% { transform: translateY(-12px) rotate(5deg); } }
+
+  .couples-stage {
+    display: flex; justify-content: space-between; align-items: center;
+    margin: 2rem 0; position: relative; width: 100%; z-index: 2;
+  }
+  
+  .avatar-wrap {
+    font-size: 3.8rem; position: relative; user-select: none;
+    transition: transform 2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
+  .avatar-boy { transform: translateX(-250px); }
+  .avatar-girl { transform: translateX(250px); }
+  
+  .couples-stage.meets .avatar-boy { transform: translateX(110px); }
+  .couples-stage.meets .avatar-girl { transform: translateX(-110px); }
+
+  .party-hat {
+    position: absolute; top: -20px; left: 10px; font-size: 2rem; transform: rotate(15deg);
+  }
+  .knife-hand {
+    position: absolute; bottom: 0; left: -20px; font-size: 2.2rem; transform: rotate(-30deg);
+  }
+
+  .cake-area { position: relative; display: inline-block; margin: 1rem 0; cursor: pointer; z-index: 2; }
+  .cake-emoji { font-size: 7.5rem; user-select: none; display: block; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5)); transition: transform 0.2s;}
+  .cake-emoji:active { transform: scale(0.95); }
+  
+  .matchstick-btn {
+    background: #FF9F43; color: #16161A; font-weight: bold; border: none;
+    padding: 10px 24px; border-radius: 30px; cursor: pointer; margin-top: 10px;
+    box-shadow: 0 4px 15px rgba(255, 159, 67, 0.4); font-size: 0.95rem;
+    transition: transform 0.2s; position: relative; z-index: 2;
+  }
+  .matchstick-btn:hover { transform: scale(1.05); }
+
+  .spinner-box { background: var(--bg-input); border: 2px solid var(--accent-pink); padding: 2rem; border-radius: 50%; width: 200px; height: 200px; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; font-weight: bold; text-align: center; transition: transform 3s cubic-bezier(0.17, 0.67, 0.12, 0.99); }
+</style>
+</head>
+<body>
+
+<canvas id="particles-canvas"></canvas>
+
+<!-- VIBE PANEL WITH SNOWFLAKES ADDED -->
+<div class="vibe-panel-toggle" onclick="toggleVibePanel()">⚙️</div>
+<div class="vibe-panel" id="vibe-panel">
+  <p style="font-size:0.8rem; margin-bottom:8px; color:var(--text-muted);">Change Atmosphere:</p>
+  <button class="vibe-btn" onclick="changeParticles(['❤️','💕','💗'])">Hearts</button>
+  <button class="vibe-btn" onclick="changeParticles(['✨','🌟','💫'])">Stars</button>
+  <button class="vibe-btn" onclick="changeParticles(['🐱','🐾','😻','😸'])">Cute Cats 🐱</button>
+  <button class="vibe-btn" onclick="changeParticles(['🌸','🌺','🥀'])">Flowers</button>
+  <button class="vibe-btn" onclick="changeParticles(['❄️','🌨️','🏔️'])">Snowflakes ❄️</button>
+</div>
+
+<nav>
+  <div class="logo">Happy Birthday 💕</div>
+  <ul class="links">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#lock">Midnight Vault</a></li>
+    <li><a href="#secret">Secret</a></li>
+    <li><a href="#offcampus">Pass</a></li>
+    <li><a href="#chore-wheel">Wheel</a></li>
+  </ul>
+
+  <!-- MUSIC TERMINAL WITH DROPDOWN -->
+  <div class="music-terminal">
+    <button class="terminal-btn" onclick="prevTrack()">⏮</button>
+    <button class="terminal-btn" id="play-pause-btn" onclick="toggleMusic()">▶</button>
+    <button class="terminal-btn" onclick="nextTrack()">⏭</button>
+    
+    <select id="song-select" class="terminal-select" onchange="selectTrack(this.value)">
+      <!-- Options populated automatically via JS -->
+    </select>
+  </div>
+</nav>
+<audio id="bg-music" loop><source id="audio-src" src="track1.mp3" type="audio/mpeg"></audio>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-eyebrow">✦ A Special Day Just for You ✦</div>
+  <h1>Happy Birthday,<br><em>Kanak!</em></h1>
+  
+  <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom: 5px; margin-top: 15px;">Time since we met (down to the millisecond):</p>
+  <div class="digital-counter" id="ms-counter">0000000000 ms</div>
+
+  <a href="#lock" class="btn-primary">Unlock the Secrets ↓</a>
+</section>
+
+<!-- 1. MIDNIGHT VAULT -->
+<section id="lock">
+  <div class="section-heading">
+    <span class="eyebrow">Anticipation</span>
+    <h2>Midnight Vault</h2>
+  </div>
+  <div class="dark-card" id="vault-card">
+    
+    <div class="virtual-lock" id="the-lock" onclick="handleLockTap()">🔒</div>
+    <p style="font-size: 1.2rem;" id="midnight-timer">Loading timer...</p>
+    <p style="color:var(--text-muted); font-size: 0.8rem; margin-top:10px;" id="midnight-hint">Unlocks at midnight.</p>
+
+    <!-- UNLOCKED CELEBRATION STAGE -->
+    <div id="midnight-reveal">
+      <img src="cat1.jpeg" class="pookie-cat cat-left" alt="Cat" onerror="this.src='https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=100'">
+      <img src="cat2.jpeg" class="pookie-cat cat-right" alt="Cat" onerror="this.src='https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=100'">
+      <img src="cat3.jpeg" class="pookie-cat cat-bottom-left" alt="Cat" onerror="this.src='https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=100'">
+      <img src="cat4.jpeg" class="pookie-cat cat-bottom-right" alt="Cat" onerror="this.src='https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=100'">
+
+      <div style="position: relative; z-index: 2;">
+        <h3 style="color:var(--accent-pink); font-family: 'Playfair Display', serif; font-size:1.8rem;">Happy Birthday, Kanak! 🎉</h3>
+        <p style="margin: 8px 0; color:var(--text-muted);">Strike the matchstick to light the candles, wish, and let her cut the cake!</p>
+      </div>
+
+      <div class="couples-stage" id="couples-stage">
+        <div class="avatar-wrap avatar-boy">👦</div>
+        <div class="avatar-wrap avatar-girl">
+          <span class="party-hat">🥳</span>
+          <span class="knife-hand">🔪</span>
+          👧
+        </div>
+      </div>
+
+      <div class="cake-area" onclick="cutCake()">
+        <span class="cake-emoji" id="cake-display">🥮</span>
+      </div>
+      <br>
+      <button class="matchstick-btn" id="match-btn" onclick="lightCandles()">Strike Matchstick 🧹🔥</button>
+      <p id="cake-status-text" style="font-size:0.85rem; color:var(--accent-pink); margin-top:10px; font-style:italic; position: relative; z-index: 2;">Candles are completely off. Tap the matchstick to light them up!</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 2. SECRET MESSAGE VAULT -->
+<section id="secret">
+  <div class="section-heading">
+    <span class="eyebrow">Classified</span>
+    <h2>The Secret Note & Video Vault</h2>
+  </div>
+  <div class="dark-card">
+    <p style="margin-bottom: 1rem;">Enter the secret password to unlock my note and personal videos.</p>
+    <input type="password" id="password-input" class="secret-input" placeholder="Enter password...">
+    <br>
+    <button class="btn-primary" onclick="checkPassword()">Unlock Vault</button>
+    
+    <p id="secret-reveal">"From the moment we met, I knew you were the one. I love you more than words can say. Thank you for being you, Kanak."</p>
+    <p id="secret-error">you are a dumb you cant even figure out the password yourself</p>
+
+    <!-- UNLOCKED DUAL VIDEOS SECTION -->
+    <div class="unlocked-videos-grid" id="unlocked-videos">
+      <div class="video-card">
+        <h4>🎬 Happy Birthday Wish</h4>
+        <video controls preload="metadata">
+          <source src="bday_wish.mp4" type="video/mp4">
+          Your browser does not support video playback.
+        </video>
+      </div>
+
+      <div class="video-card">
+        <h4>💌 Personal Message From Me</h4>
+        <video controls preload="metadata">
+          <source src="my_message.mp4" type="video/mp4">
+          Your browser does not support video playback.
+        </video>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- OFF-CAMPUS MOVIE NIGHT GENERATOR -->
+<section id="offcampus">
+  <div class="section-heading">
+    <span class="eyebrow">Off-Campus Nights</span>
+    <h2>Movie Night Pass</h2>
+  </div>
+  <div class="dark-card">
+    <p>Let's plan our off-campus escape. Generate your movie night rules.</p>
+    <div class="ticket-display" id="ticket-display">Click to generate your off-campus pass...</div>
+    <br>
+    <button class="btn-primary" onclick="generateTicket()">Print Pass 🎟️</button>
+  </div>
+</section>
+
+<!-- CHORE WHEEL -->
+<section id="chore-wheel">
+  <div class="section-heading">
+    <span class="eyebrow">At Your Service</span>
+    <h2>The Boyfriend Wheel</h2>
+  </div>
+  <div class="dark-card">
+    <div class="spinner-box" id="spinner-box">Spin Me!</div>
+    <button class="btn-primary" onclick="spinWheel()">Spin for a Favor</button>
+  </div>
+</section>
+
+<footer>
+  <p style="color: var(--accent-pink);">Made with code and infinite love, just for you, Kanak.</p>
+</footer>
+
+<script>
+// COUNTDOWN START DATE: August 25, 2025
+const TOGETHER_SINCE = new Date(2025, 7, 25); 
+
+// MUSIC TERMINAL PLAYLIST WITH DROPDOWN SUPPORT
+const PLAYLIST = [
+  { label: "1. Uddariyan", src: "track1.mp3" },
+  { label: "2. Khat", src: "track2.mp3" },
+  { label: "3. Naazni", src: "track3.mp3" },
+  { label: "4. Jahaan", src: "track4.mp3" },
+  { label: "5. Raina Jaoge", src: "track5.mp3" }
+];
+
+let trackIdx = 0, musicPlaying = false;
+const audio = document.getElementById('bg-music');
+const playBtn = document.getElementById('play-pause-btn');
+const songSelect = document.getElementById('song-select');
+
+// Populate Dropdown Options
+function initPlaylist() {
+  songSelect.innerHTML = '';
+  PLAYLIST.forEach((track, index) => {
+    const opt = document.createElement('option');
+    opt.value = index;
+    opt.textContent = track.label;
+    songSelect.appendChild(opt);
+  });
+}
+initPlaylist();
+
+function toggleMusic() {
+  if (musicPlaying) { 
+    audio.pause(); 
+    playBtn.textContent = '▶'; 
+  } else { 
+    audio.play().catch(()=>{}); 
+    playBtn.textContent = '⏸'; 
+  }
+  musicPlaying = !musicPlaying;
+}
+
+function loadTrack() {
+  songSelect.value = trackIdx; 
+  document.getElementById('audio-src').src = PLAYLIST[trackIdx].src;
+  audio.load();
+  if (musicPlaying) audio.play();
+}
+
+function selectTrack(idx) {
+  trackIdx = parseInt(idx, 10);
+  loadTrack();
+}
+
+function prevTrack() { 
+  trackIdx = (trackIdx - 1 + PLAYLIST.length) % PLAYLIST.length; 
+  loadTrack(); 
+}
+
+function nextTrack() { 
+  trackIdx = (trackIdx + 1) % PLAYLIST.length; 
+  loadTrack(); 
+}
+
+// PARTICLES
+let SYMBOLS = ['❤️','💕','💗'];
+function toggleVibePanel() { document.getElementById('vibe-panel').classList.toggle('open'); }
+function changeParticles(arr) { SYMBOLS = arr; particles.forEach(p => p.symbol = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)]); }
+
+const pCanvas = document.getElementById('particles-canvas'), ctx = pCanvas.getContext('2d');
+let particles = [];
+function resizeCanvas() { pCanvas.width = window.innerWidth; pCanvas.height = window.innerHeight; }
+resizeCanvas(); window.addEventListener('resize', resizeCanvas);
+function spawnParticle() { return { x: Math.random() * pCanvas.width, y: pCanvas.height + 20, size: 12 + Math.random() * 15, speed: 0.3 + Math.random() * 0.8, drift: (Math.random() - 0.5) * 0.5, opacity: 0.3 + Math.random() * 0.5, symbol: SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)], wobble: Math.random() * Math.PI * 2, wobbleSpeed: 0.02 }; }
+for (let i=0; i<25; i++) { let p = spawnParticle(); p.y = Math.random() * pCanvas.height; particles.push(p); }
+function animateParticles() {
+  ctx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+  particles.forEach(p => { p.y -= p.speed; p.wobble += p.wobbleSpeed; p.x += Math.sin(p.wobble) * 0.6 + p.drift; ctx.globalAlpha = p.opacity; ctx.font = `${p.size}px serif`; ctx.fillText(p.symbol, p.x, p.y); if (p.y < -30) Object.assign(p, spawnParticle()); });
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+// DIGITAL COUNTER
+setInterval(() => {
+  const diff = new Date() - TOGETHER_SINCE;
+  document.getElementById('ms-counter').textContent = diff.toLocaleString() + " ms";
+}, 11);
+
+// PASSWORD VAULT
+let failedAttempts = 0;
+function checkPassword() {
+  const input = document.getElementById('password-input').value.trim();
+  const correctPassword = '22062026'; 
+
+  if (input === correctPassword) {
+    document.getElementById('secret-reveal').style.display = 'block';
+    document.getElementById('unlocked-videos').style.display = 'grid'; 
+    document.getElementById('secret-error').style.display = 'none';
+    document.getElementById('password-input').style.borderColor = '#4CAF50';
+  } else {
+    failedAttempts++;
+    document.getElementById('password-input').value = '';
+    if (failedAttempts >= 3) {
+      document.getElementById('secret-error').style.display = 'block';
+      document.getElementById('secret-reveal').style.display = 'none';
+      document.getElementById('unlocked-videos').style.display = 'none';
+      document.getElementById('password-input').style.borderColor = '#FF4757';
+    } else {
+      alert(`Wrong password! Attempt ${failedAttempts} of 3.`);
+    }
+  }
+}
+
+// OFF-CAMPUS PASS GENERATOR
+const offCampusPasses = [
+  "OFF-CAMPUS PASS #1: Cozy late-night drive + I buy your favorite dessert.",
+  "OFF-CAMPUS PASS #2: Full weekend getaway — zero stress, everything planned by me.",
+  "OFF-CAMPUS PASS #3: Cafe hopping afternoon + un-interrupted long conversations.",
+  "OFF-CAMPUS PASS #4: Evening movie marathon + endless snacks delivered to you."
+];
+function generateTicket() {
+  const t = offCampusPasses[Math.floor(Math.random() * offCampusPasses.length)];
+  document.getElementById('ticket-display').textContent = `>> PASS GENERATED \n\n${t}`;
+}
+
+// CHORE WHEEL
+const chores = ["Foot Massage 🦶", "Cook Favorite Dinner 🍳", "Movie Choice 🎬", "Buy Chocolates 🍫", "Win Any Argument 🏆"];
+function spinWheel() {
+  const box = document.getElementById('spinner-box');
+  let spins = 0;
+  box.style.transform = `rotate(${Math.random() * 360}deg)`;
+  const interval = setInterval(() => {
+    box.textContent = chores[spins % chores.length];
+    spins++;
+    if (spins > 20) { clearInterval(interval); box.textContent = chores[Math.floor(Math.random() * chores.length)]; box.style.borderColor = '#4CAF50'; }
+  }, 100);
+}
+
+// MIDNIGHT VAULT UNLOCK & CELEBRATION STAGE
+let tapCount = 0;
+let tapTimer = null;
+
+function handleLockTap() {
+  tapCount++;
+  if (tapCount === 2) {
+    unlockMidnightVault();
+    tapCount = 0;
+    clearTimeout(tapTimer);
+  } else {
+    clearTimeout(tapTimer);
+    tapTimer = setTimeout(() => { tapCount = 0; }, 500);
+  }
+}
+
+let candlesLit = false;
+
+function unlockMidnightVault() {
+  document.getElementById('midnight-timer').style.display = 'none';
+  document.getElementById('midnight-hint').style.display = 'none';
+  document.getElementById('the-lock').textContent = '🔓';
+  document.getElementById('midnight-reveal').style.display = 'block';
+
+  setTimeout(() => {
+    document.getElementById('midnight-reveal').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 300);
+
+  setTimeout(() => {
+    document.getElementById('couples-stage').classList.add('meets');
+  }, 800);
+}
+
+function lightCandles() {
+  if (!candlesLit) {
+    candlesLit = true;
+    document.getElementById('cake-display').textContent = '🎂'; 
+    document.getElementById('cake-status-text').textContent = '🔥 Candles are lit! Tap the cake to let her cut a slice!';
+    document.getElementById('match-btn').style.display = 'none';
+    
+    for(let i=0; i<15; i++) { particles.push(spawnParticle()); }
+  }
+}
+
+function cutCake() {
+  if (!candlesLit) {
+    alert("Strike the matchstick to light the candles first! 🔥");
+    return;
+  }
+  const cake = document.getElementById('cake-display');
+  if (cake.textContent !== '🍰🍰') {
+    cake.textContent = '🍰🍰';
+    document.getElementById('cake-status-text').innerHTML = '🎉 2 slices of cake served! One for you, Kanak, and one for me! 🍰';
+    
+    for(let i=0; i<35; i++) { particles.push(spawnParticle()); }
+  }
+}
+
+// Midnight Countdown Interval
+setInterval(() => {
+  const now = new Date();
+  const midnight = new Date(); midnight.setHours(24, 0, 0, 0);
+  const diff = midnight - now;
+  if (diff <= 0) {
+    unlockMidnightVault();
+  } else {
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('midnight-timer').textContent = `${h}h ${m}m ${s}s until midnight`;
+  }
+}, 1000);
+
+</script>
+</body>
+</html>
